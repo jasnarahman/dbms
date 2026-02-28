@@ -1,0 +1,97 @@
+
+1. List all invoice items, avoid duplicates. 
+---------------------------------------------  
+mysql> select*from product2;
++-----+----------+-------+
+| pid | pname    | price |
++-----+----------+-------+
+| 101 | Keyboard |   612 |
+| 102 | A4paper  |    20 |
+| 103 | pen      |    10 |
+| 104 | ink      |   357 |
+| 105 | eraser   |     5 |
+| 106 | pen      |    10 |
++-----+----------+-------+
+6 rows in set (0.00 sec)
+
+
+mysql> insert into product2 values(106,'pen',10);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select distinct pname from product2;
++----------+
+| pname    |
++----------+
+| Keyboard |
+| A4paper  |
+| pen      |
+| ink      |
+| eraser   |
++----------+
+5 rows in set (0.00 sec)
+
+2. List the customer details who not live in ‘tvm’.
+---------------------------------------------------
+mysql> select *from customer2;
++------+---------+------------+------------+--------------+
+| id   | name    | address    | city       | ph_no        |
++------+---------+------------+------------+--------------+
+| 1003 | anu     | Kizhkkayil | Trivandrum | 904050131313 |
+| 1004 | Shaikha | Meleveetil | Malappuram | 9946868990   |
+| 1005 | Saniya  | Vdakkayil  | Kozhikode  | 8978665543   |
++------+---------+------------+------------+--------------+
+3 rows in set (0.00 sec)
+
+mysql> select * from customer2 where city not in('Trivandrum');
++------+---------+------------+------------+------------+
+| id   | name    | address    | city       | ph_no      |
++------+---------+------------+------------+------------+
+| 1004 | Shaikha | Meleveetil | Malappuram | 9946868990 |
+| 1005 | Saniya  | Vdakkayil  | Kozhikode  | 8978665543 |
++------+---------+------------+------------+------------+
+2 rows in set (0.00 sec)
+
+3. Display the customer details sorted in ascending by city and descending by names.
+------------------------------------------------------------------------------------
+mysql> select * from customer2 order by city asc,name desc;
++------+---------+------------+------------+--------------+
+| id   | name    | address    | city       | ph_no        |
++------+---------+------------+------------+--------------+
+| 1005 | Saniya  | Vdakkayil  | Kozhikode  | 8978665543   |
+| 1004 | Shaikha | Meleveetil | Malappuram | 9946868990   |
+| 1003 | anu     | Kizhkkayil | Trivandrum | 904050131313 |
++------+---------+------------+------------+--------------+
+3 rows in set (0.00 sec)
+
+4. Find the customer names who have ‘e’ or ‘a’ in them and at least 3 characters in length.
+--------------------------------------------------------------------------------------------
+mysql> SELECT name FROM customer2 WHERE name LIKE '%e%' OR name LIKE '%a%' AND name LIKE '___%';
+
++---------+
+| name    |
++---------+
+| anu     |
+| Shaikha |
+| Saniya  |
++---------+
+3 rows in set (0.00 sec)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
