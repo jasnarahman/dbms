@@ -1,0 +1,39 @@
+1. List the product name and quantity of invoice items. 
+-------------------------------------------------------
+mysql> select product2.pname,invoice_item.quantity from product2 natural join invoice_item;
++----------+----------+
+| pname    | quantity |
++----------+----------+
+| Keyboard |        4 |
+| eraser   |        6 |
+| pen      |        2 |
+| Keyboard |        2 |
+| pen      |        3 |
++----------+----------+
+5 rows in set (0.00 sec)
+
+2. Display the customer name, product name, invoice date of purchased item ‘eraser’.
+---------------------------------------------------------------------------------------
+mysql> select customer2.name, product2.pname, invoice_master.inv_date from customer2 join invoice_master on customer2.id = invoice_master.id join invoice_item on invoice_master.inv_id = invoice_item.inv_id join product2 on invoice_item.pid = product2.pid where product2.pname = 'eraser';
++------+--------+------------+
+| name | pname  | inv_date   |
++------+--------+------------+
+| anu  | eraser | 2025-05-06 |
++------+--------+------------+
+1 row in set (0.01 sec)
+
+3. Display all customer details and invoice details must include customer has not
+   purchased items.
+-----------------------------------------------------------------------------------   
+   mysql> select *from customer2 left join invoice_master on customer2.id =invoice_master.id;
++------+---------+------------+------------+--------------+--------+------+------------+
+| id   | name    | address    | city       | ph_no        | inv_id | id   | inv_date   |
++------+---------+------------+------------+--------------+--------+------+------------+
+| 1003 | anu     | Kizhkkayil | Trivandrum | 904050131313 |    210 | 1003 | 2025-06-06 |
+| 1003 | anu     | Kizhkkayil | Trivandrum | 904050131313 |    209 | 1003 | 2025-05-06 |
+| 1003 | anu     | Kizhkkayil | Trivandrum | 904050131313 |    208 | 1003 | 2025-05-05 |
+| 1004 | Shaikha | Meleveetil | Malappuram | 9946868990   |    211 | 1004 | 2025-06-06 |
+| 1005 | Saniya  | Vdakkayil  | Kozhikode  | 8978665543   |    212 | 1005 | 2025-06-07 |
++------+---------+------------+------------+--------------+--------+------+------------+
+5 rows in set (0.00 sec)
+
