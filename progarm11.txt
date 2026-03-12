@@ -1,0 +1,22 @@
+PL/SQL PROGRAMS (FUNCTIONS)
+
+1.Create a function to calculate price_range(low, medium, high) of each product. If price<=5
+indicate as low, upto 50 indicate as medium, and above as high.
+
+mysql> create function prange(price decimal(10,2)) returns varchar(10) deterministic begin declare result varchar(10);     if price<=5 then set result='low';  elseif price<=50 then set result='medium'; else set result='high'; end if;  return result; end//
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> select pname,price,prange(price) as pricecategory from product2;
+    -> //
++----------+-------+---------------+
+| pname    | price | pricecategory |
++----------+-------+---------------+
+| Keyboard |   612 | high          |
+| A4paper  |    20 | medium        |
+| pen      |    10 | medium        |
+| ink      |   357 | high          |
+| eraser   |     5 | low           |
+| pen      |    10 | medium        |
++----------+-------+---------------+
+6 rows in set (0.00 sec)
+
