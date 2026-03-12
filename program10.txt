@@ -1,0 +1,52 @@
+PL/SQL PROGRAMS (STORED PROCEDURES)
+--------------------------------------
+1. Create a procedure to find greatest of 3 numbers. 
+
+mysql> delimiter //
+mysql> create procedure greatest(a int,b int,c int)
+    -> begin
+    -> declare x,y,z int;
+    -> set x=a;
+    -> set y=b;
+    -> set z=c;
+    -> if x>y and x>z then
+    -> select x as 'greater';
+    -> elseif y>x and y>z then 
+    -> select y as 'greater';
+    -> else
+    -> select z as 'greater';
+    -> end if;
+    -> end //
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> call greatest(2,4,6)//
++---------+
+| greater |
++---------+
+|       6 |
++---------+
+1 row in set (0.00 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+
+2. Create a procedure to display invoice details of a particular customer.
+
+mysql> delimiter //
+mysql> create procedure i_d(in cid int) begin select customer2.id,customer2.name,invoice_master.inv_id,invoice_master.inv_date,invoice_item.pid,invoice_item.quantity from customer2 join invoice_master on customer2.id=invoice_master.id join invoice_item on invoice_master.inv_id=invoice_item.inv_id where customer2.id=cid;end//
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> call i_d(1003)//
++------+------+--------+------------+------+----------+
+| id   | name | inv_id | inv_date   | pid  | quantity |
++------+------+--------+------------+------+----------+
+| 1003 | anu  |    208 | 2025-05-05 |  101 |        4 |
+| 1003 | anu  |    208 | 2025-05-05 |  106 |        3 |
+| 1003 | anu  |    209 | 2025-05-06 |  105 |        6 |
+| 1003 | anu  |    210 | 2025-06-06 |  106 |        2 |
++------+------+--------+------------+------+----------+
+4 rows in set (0.00 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+
+
+
