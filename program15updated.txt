@@ -1,0 +1,51 @@
+RETRIEVING DATA
+1. Write a MongoDB query to display the customer documents having city ‘ekm’,’tvm’. 
+INVOICE> db.CUSTOMER.find({$or:[{city:"EKM"},{city:"TVM"}] })
+
+[
+  {
+    _id: ObjectId('69b7ab21e0a2a3a46489b03e'),
+    ID: '2',
+    NAME: 'SAHAVA',
+    CITY: 'TVM'
+  },
+  {
+    _id: ObjectId('69b7abbce0a2a3a46489b03f'),
+    ID: '3',
+    NAME: 'NEIRA',
+    CITY: 'EKM'
+  }
+]
+
+
+2. Write a MongoDB query to display all product documents their price >50. 
+INVOICE> db.PRODUCT.find({PRICE:{$gt:50}})
+[
+  {
+    _id: ObjectId('69c0f378064a26ffb489b03e'),
+    PNAME: 'A4',
+    PRICE: 250
+  }
+]
+
+
+
+3. Write a MongoDB query to find customer documents who not live in ‘tvm’.
+
+INVOICE> db.CUSTOMER.find({city:{$ne:"TVM"}})
+[
+  
+  {
+    _id: ObjectId('69b7ab21e0a2a3a46489b03e'),
+    ID: '2',
+    NAME: 'SAHAVA',
+    CITY: 'TVM'
+  },
+  {
+    _id: ObjectId('69b7abbce0a2a3a46489b03f'),
+    ID: '3',
+    NAME: 'NEIRA',
+    CITY: 'EKM'
+  }
+]
+
