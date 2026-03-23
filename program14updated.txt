@@ -1,0 +1,124 @@
+1. Write a MongoDB query to create an INVOICE database and collections (CUSTOMER,
+PRODUCT) and its corresponding documents.
+
+nvoice> use INVOICE
+switched to db INVOICE
+INVOICE> db.createCollection("CUSTOMER");
+{ ok: 1 }
+INVOICE> db.createCollection("PRODUCT");
+{ ok: 1 }
+
+INVOICE> db.CUSTOMER.insert({"ID":"1","NAME":"PUNYA","CITY":"CALICUT"})
+DeprecationWarning: Collection.insert() is deprecated. Use insertOne, insertMany, or bulkWrite.
+{
+  acknowledged: true,
+  insertedIds: { '0': ObjectId('69b7aaa6e0a2a3a46489b03d') }
+}
+
+INVOICE> db.CUSTOMER.insert({"ID":"2","NAME":"SAHAVA","CITY":"TVM"})
+{
+  acknowledged: true,
+  insertedIds: { '0': ObjectId('69b7ab21e0a2a3a46489b03e') }
+}
+
+INVOICE> db.CUSTOMER.insert({"ID":"3","NAME":"NEIRA","CITY":"TRISSUR"})
+{
+  acknowledged: true,
+  insertedIds: { '0': ObjectId('69b7abbce0a2a3a46489b03f') }
+}
+
+INVOICE> db.PRODUCT.insert([{"PNAME":"PEN","PRICE":10},{"PNAME":"A4","PRICE":250},{"PNAME":"BOOK","PRICE":30}])
+DeprecationWarning: Collection.insert() is deprecated. Use insertOne, insertMany, or bulkWrite.
+{
+  acknowledged: true,
+  insertedIds: {
+    '0': ObjectId('69c0f378064a26ffb489b03d'),
+    '1': ObjectId('69c0f378064a26ffb489b03e'),
+    '2': ObjectId('69c0f378064a26ffb489b03f')
+  }
+}
+
+
+
+2. Write a MongoDB query to find all documents from the collection CUSTOMER 
+
+INVOICE> db.CUSTOMER.find();
+[
+  
+  {
+    _id: ObjectId('69b7aaa6e0a2a3a46489b03d'),
+    ID: '1',
+    NAME: 'PUNYA',
+    CITY: 'CALICUT'
+  },
+  {
+    _id: ObjectId('69b7ab21e0a2a3a46489b03e'),
+    ID: '2',
+    NAME: 'SAHAVA',
+    CITY: 'TVM'
+  },
+  {
+    _id: ObjectId('69b7abbce0a2a3a46489b03f'),
+    ID: '3',
+    NAME: 'NEIRA',
+    CITY: 'TRISSUR'
+  }
+]
+
+ 3. Write a MongoDB query to update the city in the collection CUSTOMER. 
+ 
+ INVOICE> db.CUSTOMER.updateOne({"CITY":"TRISSUR"},{$set:{"CITY":"EKM"}});
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+INVOICE> db.CUSTOMER.find();
+[
+  
+  {
+    _id: ObjectId('69b7aaa6e0a2a3a46489b03d'),
+    ID: '1',
+    NAME: 'PUNYA',
+    CITY: 'CALICUT'
+  },
+  {
+    _id: ObjectId('69b7ab21e0a2a3a46489b03e'),
+    ID: '2',
+    NAME: 'SAHAVA',
+    CITY: 'TVM'
+  },
+  {
+    _id: ObjectId('69b7abbce0a2a3a46489b03f'),
+    ID: '3',
+    NAME: 'NEIRA',
+    CITY: 'EKM'
+  }
+]
+
+ 4. Write a MongoDB query to delete the first matched document whose city is “Calicut”.
+ 
+ INVOICE> db.CUSTOMER.deleteOne({"CITY":"CALICUT"});
+{ acknowledged: true, deletedCount: 1 }
+INVOICE> db.CUSTOMER.find();
+[
+ 
+  {
+    _id: ObjectId('69b7ab21e0a2a3a46489b03e'),
+    ID: '2',
+    NAME: 'SAHAVA',
+    CITY: 'MALAPPURAM'
+  },
+  {
+    _id: ObjectId('69b7abbce0a2a3a46489b03f'),
+    ID: '3',
+    NAME: 'NEIRA',
+    CITY: 'EKM'
+  }
+]
+
+
+
+ 
