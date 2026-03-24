@@ -1,0 +1,83 @@
+AGGREGATE FUNCTIONS AND REGULAR EXPRESSIONS
+1. Write a MongoDB query to sort customer details in ascending order of their name.
+
+INVOICE> db.CUSTOMER.find().sort({ NAME: 1 })
+[
+  {
+    _id: ObjectId('69c23b06aa5ee313ee89b03f'),
+    NAME: 'JASNA',
+    CITY: 'TVM',
+    AGE: 40
+  },
+  {
+    _id: ObjectId('69c23af9aa5ee313ee89b03d'),
+    NAME: 'NEIRA',
+    CITY: 'TRISSUR',
+    AGE: 30
+  },
+  {
+    _id: ObjectId('69c23b00aa5ee313ee89b03e'),
+    NAME: 'SINU',
+    CITY: 'EKM',
+    AGE: 20
+  }
+]
+
+
+ 
+2. Write a MongoDB query to count number of customers in each city.
+ 
+INVOICE> db.CUSTOMER.aggregate([{$group:{_id:"CITY",total:{$sum:1}}}])
+[ { _id: 'CITY', total: 3 } ]
+
+3. Write a MongoDB query to find minimum and maximum age in each city.
+
+INVOICE> db.CUSTOMER.aggregate([{$group:{_id:"$CITY",minAge:{$min:"$AGE"},maxAge:{$max:"$AGE"}}}])
+[
+  { _id: 'TRISSUR', minAge: 30, maxAge: 30 },
+  { _id: 'EKM', minAge: 20, maxAge: 20 },
+  { _id: 'TVM', minAge: 40, maxAge: 40 }
+]
+
+ 
+
+
+4. Write a MongoDB query using the $match stage to retrieve all customer documents whose
+customer_name starts with the letter “S”.
+INVOICE> db.CUSTOMER.aggregate([{$match:{NAME:{$regex:"^S"}}}])
+[
+  {
+    _id: ObjectId('69c23b00aa5ee313ee89b03e'),
+    NAME: 'SINU',
+    CITY: 'EKM',
+    AGE: 20
+  }
+]
+
+
+
+5. Write a query using $lookup to join CUSTOMER and PRODUCT collections and display only
+customer name, product name, and price.
+
+NVOICE> db.CUSTOMER.aggregate([
+  {
+     $lookup: { from: "PRODUCT", localField: "product_id",foreignField: "PRODUCT_id", as: "PRODUCT_info" }
+  },
+{
+  $unwind: "$PRODUCT_info"
+ },
+ {
+ $project: {
+ _id: 0, NAME: "$NAME",PNAME: "$PRODUCT_info.PNAME", PRICE: "$PRODUCT_info.PRICE" }} ]);
+[
+  { NAME: 'NEIRA', PNAME: 'PEN', PRICE: 10 },
+  { NAME: 'NEIRA', PNAME: 'A4', PRICE: 250 },
+  { NAME: 'NEIRA', PNAME: 'BOOK', PRICE: 30 },
+  { NAME: 'SINU', PNAME: 'PEN', PRICE: 10 },
+  { NAME: 'SINU', PNAME: 'A4', PRICE: 250 },
+  { NAME: 'SINU', PNAME: 'BOOK', PRICE: 30 },
+  { NAME: 'JASNA', PNAME: 'PEN', PRICE: 10 },
+  { NAME: 'JASNA', PNAME: 'A4', PRICE: 250 },
+  { NAME: 'JASNA', PNAME: 'BOOK', PRICE: 30 }
+]
+
